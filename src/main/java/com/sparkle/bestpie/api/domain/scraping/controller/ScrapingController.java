@@ -41,13 +41,11 @@ public class ScrapingController {
     @Scheduled(fixedRate = 600000)
     public void dcinsideScraping() {
         Elements elements = getWebPage(scrapingConfig.getDcinsideBestUrl()).select(scrapingConfig.getDcinsidePostListCssQuery());
-
         for(Element element : elements) {
             BestPost bestPost = new BestPost();
             bestPost.setUrl(URLDecoder.decode(element.select(scrapingConfig.getDcinsideUrlCssQuery()).attr("href"), StandardCharsets.UTF_8));
             bestPost.setTitle(element.selectFirst("a").text());
             bestPost.setSiteName(DCINSIDE);
-
             scrapingService.savePost(bestPost);
         }
     }
@@ -61,6 +59,9 @@ public class ScrapingController {
             bestPost.setUrl(scrapingConfig.getClienBestUrl() + URLDecoder.decode(element.select(scrapingConfig.getClienUrlCssQuery()).attr("href"), StandardCharsets.UTF_8));
             bestPost.setTitle(element.select(scrapingConfig.getClienTitleCssQuery()).attr("title"));
             bestPost.setSiteName(CLIEN);
+
+            if (bestPost.getTitle().isEmpty()) continue;
+
             scrapingService.savePost(bestPost);
         }
     }
@@ -71,16 +72,14 @@ public class ScrapingController {
         for(Element element : elements) {
             BestPost bestPost = new BestPost();
             String url = scrapingConfig.getNateHomeUrl() + URLDecoder.decode(element.select("a").attr("href"), StandardCharsets.UTF_8);
-
             bestPost.setUrl(url);
             bestPost.setTitle(element.select("h2").text());
             bestPost.setSiteName(NATE);
-
             scrapingService.savePost(bestPost);
         }
     }
 
-    @Scheduled(fixedRate = 600000)
+    @Scheduled(fixedRate = 1000)
     public void bobaeScraping() {
         Elements elements = getWebPage(scrapingConfig.getBobaeBestUrl()).select(scrapingConfig.getBobaePostListCssQuery()).select("tbody").select("tr");
         for(Element element : elements) {
@@ -88,7 +87,6 @@ public class ScrapingController {
             bestPost.setUrl(scrapingConfig.getBobaeHomeUrl() + element.select(scrapingConfig.getBobaeUrlCssQuery()).attr("href"));
             bestPost.setTitle(element.select(scrapingConfig.getBobaeTitleCssQuery()).text());
             bestPost.setSiteName(BOBAE);
-
             scrapingService.savePost(bestPost);
         }
     }
