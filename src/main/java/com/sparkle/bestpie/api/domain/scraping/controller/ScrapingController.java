@@ -18,6 +18,8 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Component
 @AllArgsConstructor
@@ -38,7 +40,16 @@ public class ScrapingController {
 
     private final static String BOBAE = "BOBAE";
 
+    private final ExecutorService executorService = Executors.newFixedThreadPool(4); // 스레드 풀을 생성
+
     @Scheduled(fixedRate = 600000)
+    public void scrapeAllSites() {
+        executorService.submit(this::dcinsideScraping);
+        executorService.submit(this::clienScraping);
+        executorService.submit(this::natePanScraping);
+        executorService.submit(this::bobaeScraping);
+    }
+
     public void dcinsideScraping() {
         Elements elements = getWebPage(scrapingConfig.getDcinsideBestUrl()).select(scrapingConfig.getDcinsidePostListCssQuery());
         for(Element element : elements) {
@@ -50,7 +61,6 @@ public class ScrapingController {
         }
     }
 
-    @Scheduled(fixedRate = 600000)
     public void clienScraping() {
         Elements elements = getWebPage(scrapingConfig.getClienBestUrl()).select(scrapingConfig.getClienPostListCssQuery());
 
@@ -66,7 +76,6 @@ public class ScrapingController {
         }
     }
 
-    @Scheduled(fixedRate = 600000)
     public void natePanScraping() {
         Elements elements = getWebPage(scrapingConfig.getNateBestUrl()).select(scrapingConfig.getNatePostListCssQuery()).select("li");
         for(Element element : elements) {
@@ -79,7 +88,6 @@ public class ScrapingController {
         }
     }
 
-    @Scheduled(fixedRate = 1000)
     public void bobaeScraping() {
         Elements elements = getWebPage(scrapingConfig.getBobaeBestUrl()).select(scrapingConfig.getBobaePostListCssQuery()).select("tbody").select("tr");
         for(Element element : elements) {
