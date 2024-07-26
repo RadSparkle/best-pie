@@ -13,11 +13,6 @@ public class ScrapingServiceImpl implements ScrapingService {
 
     private final ScrapingRepository scrapingRepository;
 
-    /**
-     * Saves a new scrap entry if it doesn't already exist.
-     * @param bestPost The community to be saved.
-     * @return The ID of the saved community, or {@code null} if a duplicate was found.
-     */
     @Override
     public Long savePost(BestPost bestPost) {
         if(!scrapingRepository.existsByTitle(bestPost.getTitle())){
