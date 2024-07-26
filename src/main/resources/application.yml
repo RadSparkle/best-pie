@@ -1,1 +1,49 @@
-spring.application.name=best-pie
+spring:
+  datasource:
+      url:
+      username:
+      password:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+    properties:
+      hibernate:
+        format_sql: true
+
+## Scraping info
+scraping:
+  best:
+    url:
+      dcinside: https://gall.dcinside.com/board/lists/?id=dcbest
+      clien: https://www.clien.net/service/recommend
+      nate: https://pann.nate.com/talk/ranking
+      bobae: https://www.bobaedream.co.kr/list?code=best
+  home:
+    url:
+      dcinside: https://www.dcinside.com
+      clien: https://www.clien.net
+      nate: https://pann.nate.com
+      bobae: https://www.bobaedream.co.kr
+  css_query:
+    dcinside:
+      post_list: tr.ub-content.us-post.thum
+      url: a.reply_numbox
+      reg_date: td.gall_date
+    clien:
+      post_list: div.list_item
+      url: a.list_subject
+      title: span.subject_fixed
+      reg_date: span.timestamp
+    nate:
+      post_list: ul.post_wrap
+      reg_date: span.date
+    bobae:
+      post_list: table.clistTable02
+      url: a.bsubject
+      title: a.bsubject
+server:
+  port: 8090
