@@ -32,15 +32,12 @@ scraping:
     dcinside:
       post_list: tr.ub-content.us-post.thum
       url: a.reply_numbox
-      reg_date: td.gall_date
     clien:
       post_list: div.list_item
       url: a.list_subject
       title: span.subject_fixed
-      reg_date: span.timestamp
     nate:
       post_list: ul.post_wrap
-      reg_date: span.date
     bobae:
       post_list: table.clistTable02
       url: a.bsubject

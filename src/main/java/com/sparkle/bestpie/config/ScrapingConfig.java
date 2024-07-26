@@ -37,9 +37,6 @@ public class ScrapingConfig {
     @Value("${scraping.css_query.dcinside.url}")
     private String dcinsideUrlCssQuery;
 
-    @Value("${scraping.css_query.dcinside.reg_date}")
-    private String dcinsideRegDateCssQuery;
-
     @Value("${scraping.css_query.clien.post_list}")
     private String clienPostListCssQuery;
 
@@ -49,14 +46,8 @@ public class ScrapingConfig {
     @Value("${scraping.css_query.clien.title}")
     private String clienTitleCssQuery;
 
-    @Value("${scraping.css_query.clien.reg_date}")
-    private String clienRegDateCssQuery;
-
     @Value("${scraping.css_query.nate.post_list}")
     private String natePostListCssQuery;
-
-    @Value("${scraping.css_query.nate.reg_date}")
-    private String nateRegDateCssQuery;
 
     @Value("${scraping.css_query.bobae.post_list}")
     private String bobaePostListCssQuery;
