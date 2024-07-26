@@ -5,5 +5,5 @@ import com.sparkle.bestpie.common.entity.BestPost;
 import java.util.List;
 
 public interface BestPostService {
-    List<BestPost> getBestPostList();
+    List<BestPost> getBestPostList(String siteNaem);
 }
