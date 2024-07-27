@@ -26,4 +26,10 @@ public class TimeUtil {
         }
         return null;
     }
+
+
+    public static String getCurrentTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return LocalDateTime.now().format(formatter);
+    }
 }
