@@ -69,9 +69,7 @@ public class ScrapingController {
             bestPost.setUrl(scrapingConfig.getClienBestUrl() + URLDecoder.decode(element.select(scrapingConfig.getClienUrlCssQuery()).attr("href"), StandardCharsets.UTF_8));
             bestPost.setTitle(element.select(scrapingConfig.getClienTitleCssQuery()).attr("title"));
             bestPost.setSiteName(CLIEN);
-
             if (bestPost.getTitle().isEmpty()) continue;
-
             scrapingService.savePost(bestPost);
         }
     }
