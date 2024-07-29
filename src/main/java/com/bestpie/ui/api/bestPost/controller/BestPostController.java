@@ -1,6 +1,6 @@
-package com.bestpie.ui.api.domain.bestPost.controller;
+package com.bestpie.ui.api.bestPost.controller;
 
-import com.bestpie.ui.api.domain.bestPost.service.BestPostService;
+import com.bestpie.ui.api.bestPost.service.BestPostService;
 import com.bestpie.ui.common.entity.BestPost;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;

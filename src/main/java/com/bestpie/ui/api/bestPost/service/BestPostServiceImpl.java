@@ -1,6 +1,6 @@
-package com.bestpie.ui.api.domain.bestPost.service;
+package com.bestpie.ui.api.bestPost.service;
 
-import com.bestpie.ui.api.domain.bestPost.repository.BestPostRepository;
+import com.bestpie.ui.api.bestPost.repository.BestPostRepository;
 import com.bestpie.ui.common.entity.BestPost;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;

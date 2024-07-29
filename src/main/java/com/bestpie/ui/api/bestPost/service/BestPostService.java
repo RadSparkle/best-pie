@@ -1,4 +1,4 @@
-package com.bestpie.ui.api.domain.bestPost.service;
+package com.bestpie.ui.api.bestPost.service;
 
 import com.bestpie.ui.common.entity.BestPost;
 

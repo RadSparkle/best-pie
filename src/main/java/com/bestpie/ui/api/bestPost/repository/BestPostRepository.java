@@ -1,4 +1,4 @@
-package com.bestpie.ui.api.domain.bestPost.repository;
+package com.bestpie.ui.api.bestPost.repository;
 
 import com.bestpie.ui.common.entity.BestPost;
 import org.springframework.data.domain.Pageable;
