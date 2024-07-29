@@ -59,7 +59,7 @@ pipeline {
                                 sh ("ls -la")
                                 sh ("whoami")
 
-                                def directoryPath = "/home/api/best_pie"
+                                def directoryPath = "/home/best_pie/api/ui"
                                 if(!fileExists(directoryPath)) {
                                      sh "sudo mkdir -p ${directoryPath}"
                                      echo "Directory created at ${directoryPath}"
