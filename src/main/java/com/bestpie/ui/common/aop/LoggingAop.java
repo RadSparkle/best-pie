@@ -22,17 +22,18 @@ public class LoggingAop {
 
     @After("execution(* com.bestpie.ui.api.bestPost.controller.BestPostController.*(..))")
     public void logBefore() {
-        Log log = new Log();
+        Log accessLog = new Log();
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         String ipAddress = getClientIpAddress(request);
         String requestURI = request.getRequestURI();
 
-        log.setIp(ipAddress);
-        log.setLocation(requestURI);
-        log.setLogDate(TimeUtil.getCurrentTime());
+        accessLog.setIp(ipAddress);
+        accessLog.setLocation(requestURI);
+        accessLog.setLogDate(TimeUtil.getCurrentTime());
 
-        logRepository.save(log);
+        logRepository.save(accessLog);
+        log.info("User access: {}, {}", accessLog.getIp(), accessLog.getLocation());
     }
 
     private String getClientIpAddress(HttpServletRequest request) {
