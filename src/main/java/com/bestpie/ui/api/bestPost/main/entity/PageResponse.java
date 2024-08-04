@@ -1,4 +1,4 @@
-package com.bestpie.ui.common.entity;
+package com.bestpie.ui.api.bestPost.main.entity;
 
 import java.util.List;
 import java.util.Map;

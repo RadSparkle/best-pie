@@ -1,8 +1,8 @@
-package com.bestpie.ui.api.bestPost.service;
+package com.bestpie.ui.api.bestPost.main.service;
 
-import com.bestpie.ui.common.entity.BestPost;
-import com.bestpie.ui.common.entity.PageResponse;
-import com.bestpie.ui.common.entity.Rank;
+import com.bestpie.ui.api.bestPost.main.entity.BestPost;
+import com.bestpie.ui.api.bestPost.main.entity.PageResponse;
+import com.bestpie.ui.api.bestPost.main.entity.Rank;
 
 import java.io.IOException;
 import java.util.List;

@@ -20,7 +20,7 @@ public class LoggingAop {
     @Autowired
     private LogRepository logRepository;
 
-    @After("execution(* com.bestpie.ui.api.bestPost.controller.BestPostController.*(..))")
+    @After("execution(* com.bestpie.ui.api.bestPost.main.controller.BestPostController.*(..))")
     public void logBefore() {
         Log accessLog = new Log();
 
