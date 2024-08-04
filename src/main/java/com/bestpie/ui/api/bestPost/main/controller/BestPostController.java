@@ -1,9 +1,10 @@
 package com.bestpie.ui.api.bestPost.main.controller;
 
+import com.bestpie.ui.api.bestPost.main.entity.RankResponse;
 import com.bestpie.ui.api.bestPost.main.service.BestPostService;
 import com.bestpie.ui.api.bestPost.main.entity.BestPost;
 import com.bestpie.ui.api.bestPost.main.entity.PageResponse;
-import com.bestpie.ui.api.bestPost.main.entity.Rank;
+import com.bestpie.ui.common.utils.TimeUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,6 @@ import java.util.Map;
 @RequestMapping("/api/v1/bestPost")
 @RequiredArgsConstructor
 public class BestPostController {
-
     private final BestPostService bestPostService;
 
     private final String DCINSIDE = "DCINSIDE";
@@ -38,8 +38,11 @@ public class BestPostController {
     }
 
     @GetMapping("/rank")
-    public List<Rank> getRank() throws IOException {
-        return bestPostService.getRanking();
+    public RankResponse getRank() throws IOException {
+        RankResponse result = new RankResponse();
+        result.setRanks(bestPostService.getRanking());
+        result.setTimestamp(TimeUtil.getCurrentTimeRoundDown());
+        return result;
     }
 
     @GetMapping("/search")

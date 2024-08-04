@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 
 @Component
 public class TimeUtil {
@@ -31,5 +32,10 @@ public class TimeUtil {
     public static String getCurrentTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return LocalDateTime.now().format(formatter);
+    }
+
+    public static String getCurrentTimeRoundDown() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES).format(formatter);
     }
 }
