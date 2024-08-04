@@ -2,12 +2,12 @@ package com.bestpie.ui.api.bestPost.controller;
 
 import com.bestpie.ui.api.bestPost.service.BestPostService;
 import com.bestpie.ui.common.entity.BestPost;
+import com.bestpie.ui.common.entity.PageResponse;
+import com.bestpie.ui.common.entity.Rank;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +15,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/bestPost")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class BestPostController {
 
     private final BestPostService bestPostService;
@@ -36,5 +35,18 @@ public class BestPostController {
         result.put(NATE, bestPostService.getBestPostList(NATE));
         result.put(BOBAE, bestPostService.getBestPostList(BOBAE));
         return result;
+    }
+
+    @GetMapping("/rank")
+    public List<Rank> getRank() throws IOException {
+        return bestPostService.getRanking();
+    }
+
+    @GetMapping("/search")
+    public PageResponse search(
+            @RequestParam String type,
+            @RequestParam String keyword,
+            @RequestParam(defaultValue = "0") int page) throws IOException {
+        return bestPostService.search(type, keyword, page);
     }
 }

@@ -40,6 +40,8 @@ dependencies {
     implementation 'org.springframework.kafka:spring-kafka'
     implementation 'com.fasterxml.jackson.core:jackson-databind'
     implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation group: 'org.elasticsearch.client', name: 'elasticsearch-rest-high-level-client', version: '7.17.2'
+    implementation group: 'org.elasticsearch', name: 'elasticsearch', version: '7.17.2'
 }
 
 tasks.named('test') {
