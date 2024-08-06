@@ -4,13 +4,16 @@ import com.bestpie.ui.api.bestPost.main.repository.BestPostRepository;
 import com.bestpie.ui.api.bestPost.main.entity.BestPost;
 import com.bestpie.ui.api.bestPost.main.entity.PageResponse;
 import com.bestpie.ui.api.bestPost.main.entity.Rank;
+import com.bestpie.ui.common.utils.TimeUtil;
 import lombok.RequiredArgsConstructor;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -79,11 +82,25 @@ public class BestPostServiceImpl implements BestPostService {
     @Override
     public List<Rank> getRanking() throws IOException {
         List<Rank> rankList = new ArrayList<>();
-        SearchRequest searchRequest = new SearchRequest("best-post");
-        searchRequest.source().aggregation(
-                AggregationBuilders.terms("keywords_agg").field("keywords")
-        ).size(0);
+        String nowTime = TimeUtil.getCurrentTimeYYYYMMDD();
+        String rankStartTime = nowTime + "0000";
+        String rankEndTime = nowTime + "2359";
 
+        // SearchRequest 객체 생성
+        SearchRequest searchRequest = new SearchRequest("best-post");
+        SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+
+        // 날짜 범위 쿼리 추가
+        RangeQueryBuilder rangeQuery = QueryBuilders.rangeQuery("scraped_at")
+                .gte(rankStartTime)
+                .lt(rankEndTime);
+        sourceBuilder.query(rangeQuery);
+
+        // 집계 설정
+        AggregationBuilder aggregationBuilder = AggregationBuilders.terms("keywords_agg").field("keywords");
+        sourceBuilder.aggregation(aggregationBuilder);
+
+        searchRequest.source(sourceBuilder);
         SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
         Terms terms = searchResponse.getAggregations().get("keywords_agg");
         int ranking = 1;
