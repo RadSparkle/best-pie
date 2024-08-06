@@ -34,6 +34,11 @@ public class TimeUtil {
         return LocalDateTime.now().format(formatter);
     }
 
+    public static String getCurrentTimeYYYYMMDD() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        return LocalDateTime.now().format(formatter);
+    }
+
     public static String getCurrentTimeRoundDown() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES).format(formatter);
