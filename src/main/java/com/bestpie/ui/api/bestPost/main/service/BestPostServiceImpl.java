@@ -10,6 +10,7 @@ import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.search.SearchHit;
@@ -46,7 +47,7 @@ public class BestPostServiceImpl implements BestPostService {
     }
 
     @Override
-    public PageResponse search(String type, String keyword, int page) throws IOException {
+    public PageResponse search(String keyword, int page) throws IOException {
         SearchRequest searchRequest = new SearchRequest("best-post");
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder()
                 .from(page * PAGE_SIZE)
@@ -55,11 +56,10 @@ public class BestPostServiceImpl implements BestPostService {
         if (keyword == null || keyword.isEmpty()) {
             sourceBuilder.query(QueryBuilders.matchAllQuery());
         } else {
-            String field = "title";
-            if ("content".equals(type)) {
-                field = "content";
-            }
-            sourceBuilder.query(QueryBuilders.matchQuery(field, keyword));
+            BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
+            boolQuery.should(QueryBuilders.matchQuery("title", keyword));
+            boolQuery.should(QueryBuilders.matchQuery("content", keyword));
+            sourceBuilder.query(boolQuery);
         }
         String[] excludes = {"content"};
         sourceBuilder.fetchSource(null, excludes);
@@ -78,6 +78,7 @@ public class BestPostServiceImpl implements BestPostService {
 
         return new PageResponse(page, results);
     }
+
 
     @Override
     public List<Rank> getRanking() throws IOException {

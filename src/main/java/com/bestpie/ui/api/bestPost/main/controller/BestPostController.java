@@ -47,9 +47,8 @@ public class BestPostController {
 
     @GetMapping("/search")
     public PageResponse search(
-            @RequestParam String type,
             @RequestParam String keyword,
             @RequestParam(defaultValue = "0") int page) throws IOException {
-        return bestPostService.search(type, keyword, page);
+        return bestPostService.search(keyword, page);
     }
 }

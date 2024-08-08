@@ -11,7 +11,7 @@ import java.util.List;
 public interface BestPostService {
     List<BestPost> getBestPostList(String siteNaem);
 
-    PageResponse search(String type, String keyword, int page) throws IOException;
+    PageResponse search(String keyword, int page) throws IOException;
 
     List<Rank> getRanking() throws IOException;
 }
