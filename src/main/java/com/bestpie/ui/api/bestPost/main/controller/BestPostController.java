@@ -6,9 +6,13 @@ import com.bestpie.ui.api.bestPost.main.entity.BestPost;
 import com.bestpie.ui.api.bestPost.main.entity.PageResponse;
 import com.bestpie.ui.common.utils.TimeUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.scheduler.Schedulers;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,12 +41,21 @@ public class BestPostController {
         return result;
     }
 
-    @GetMapping("/rank")
-    public RankResponse getRank() throws IOException {
-        RankResponse result = new RankResponse();
-        result.setRanks(bestPostService.getRanking());
-        result.setTimestamp(TimeUtil.getCurrentTimeRoundDown());
-        return result;
+    @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<RankResponse> getRank() {
+        return Flux.interval(Duration.ofSeconds(60))
+                .onBackpressureDrop()
+                .publishOn(Schedulers.boundedElastic())
+                .map(tick -> {
+                    RankResponse result = new RankResponse();
+                    try {
+                        result.setRanks(bestPostService.getRanking());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    result.setTimestamp(TimeUtil.getCurrentTimeRoundDown());
+                    return result;
+                });
     }
 
     @GetMapping("/search")
