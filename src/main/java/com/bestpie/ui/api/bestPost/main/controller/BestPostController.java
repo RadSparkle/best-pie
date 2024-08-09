@@ -41,7 +41,7 @@ public class BestPostController {
         return result;
     }
 
-    @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping(value = "/rank", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<RankResponse> getRank() {
         return Flux.interval(Duration.ofSeconds(60))
                 .onBackpressureDrop()
